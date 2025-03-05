@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub-credentials')
-        DOCKER_IMAGE = 'yourusername/devops-demo-app'
+        DOCKER_IMAGE = 'i211182/assignment_01'
     }
     
     stages {
@@ -38,7 +38,7 @@ pipeline {
                     emailext (
                         subject: "Deployment Successful",
                         body: "The application has been successfully deployed.\n\nDocker Image: ${DOCKER_IMAGE}:${env.BUILD_NUMBER}",
-                        to: "admin@yourcompany.com"
+                        to: "625umair625@gmail.com"
                     )
                 }
             }
