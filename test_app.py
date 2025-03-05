@@ -1,6 +1,7 @@
 import pytest
 from app import app
 
+
 @pytest.fixture
 def client():
     """
@@ -10,6 +11,7 @@ def client():
     with app.test_client() as client:
         yield client
 
+
 def test_home_route(client):
     """
     Test the home route
@@ -17,6 +19,7 @@ def test_home_route(client):
     response = client.get('/')
     assert response.status_code == 200
     assert b"Welcome to the DevOps Pipeline Demo Application" in response.data
+
 
 def test_health_check(client):
     """
