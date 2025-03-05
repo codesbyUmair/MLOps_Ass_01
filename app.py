@@ -18,7 +18,7 @@ def home():
 @app.route('/health')
 def health_check():
     """
-    Health check endpoint for monitoring.
+    Health check endpoint for the monitoring.
     """
     return jsonify({
         "status": "ok",

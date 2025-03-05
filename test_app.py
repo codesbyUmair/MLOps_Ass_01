@@ -14,7 +14,7 @@ def client():
 
 def test_home_route(client):
     """
-    Test the home route
+    Test home route
     """
     response = client.get('/')
     assert response.status_code == 200
