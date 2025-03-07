@@ -16,7 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}")
+                    docker.build(DOCKER_IMAGE + ":" + env.BUILD_NUMBER)
                 }
             }
         }
@@ -24,15 +24,16 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
-                        docker.image("${DOCKER_IMAGE}:${env.BUILD_NUMBER}").push()
-                        docker.image("${DOCKER_IMAGE}:${env.BUILD_NUMBER}").push('latest')
+                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
+                        docker.image(DOCKER_IMAGE + ":" + env.BUILD_NUMBER).push()
+                        docker.image(DOCKER_IMAGE + ":" + env.BUILD_NUMBER).push('latest')
                     }
                 }
             }
         }
-        
-            post {
+    }
+    
+    post {
         success {
             mail to: 'admin@example.com',
                 subject: "Deployment Successful - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
@@ -57,6 +58,5 @@ pipeline {
                 View Logs: ${env.BUILD_URL}
                 """
         }
-    }
     }
 }
