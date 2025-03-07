@@ -35,7 +35,7 @@ pipeline {
     
     post {
         success {
-            mail to: 'admin@example.com',
+            mail to: 'i211226@nu.edu.pk',
                 subject: "Deployment Successful - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """The latest version has been deployed successfully.
 
@@ -48,7 +48,7 @@ pipeline {
         }
 
         failure {
-            mail to: 'admin@example.com',
+            mail to: 'i211226@nu.edu.pk',
                 subject: "Deployment Failed - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """The deployment has failed.
 
