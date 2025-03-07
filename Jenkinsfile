@@ -32,16 +32,31 @@ pipeline {
             }
         }
         
-        stage('Send Admin Notification') {
-            steps {
-                script {
-                    emailext (
-                        subject: "Deployment Successful",
-                        body: "The application has been successfully deployed.\n\nDocker Image: ${DOCKER_IMAGE}:${env.BUILD_NUMBER}",
-                        to: "625umair625@gmail.com"
-                    )
-                }
-            }
+            post {
+        success {
+            mail to: 'admin@example.com',
+                subject: "Deployment Successful - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """The latest version has been deployed successfully.
+
+                Job: ${env.JOB_NAME}
+                Build Number: ${env.BUILD_NUMBER}
+                Docker Image: ${DOCKER_IMAGE}:${env.BUILD_NUMBER}
+                
+                View Details: ${env.BUILD_URL}
+                """
         }
+
+        failure {
+            mail to: 'admin@example.com',
+                subject: "Deployment Failed - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """The deployment has failed.
+
+                Job: ${env.JOB_NAME}
+                Build Number: ${env.BUILD_NUMBER}
+                
+                View Logs: ${env.BUILD_URL}
+                """
+        }
+    }
     }
 }
